@@ -1,25 +1,29 @@
 ---
 
-- src: "https://github.com/artefactual-labs/ansible-elasticsearch"
+- src: "https://github.com/fsulib/fsulib.archivematica.elasticsearch"
   version: "master"
   name: "artefactual.elasticsearch"
 
-- src: "https://github.com/artefactual-labs/ansible-percona"
+- src: "https://github.com/fsulib/fsulib.archivematica.external-db"
   version: "master"
-  name: "artefactual.percona"
+  name: "fsulib.archivematica.external-db"
 
-- src: "https://github.com/artefactual-labs/ansible-gearman"
+- src: "https://github.com/fsulib/fsulib.archivematica.gearman"
   version: "master"
   name: "artefactual.gearman"
 
-- src: "https://github.com/artefactual-labs/ansible-nginx"
+- src: "https://github.com/fsulib/fsulib.archivematica.nginx"
   version: "master"
   name: "artefactual.nginx"
 
-- src: "https://github.com/artefactual-labs/ansible-archivematica-src"
+- src: "https://github.com/fsulib/fsulib.archivematica.src"
   version: "stable/1.11.x"
   name: "artefactual.archivematica-src"
 
-- src: "https://github.com/artefactual-labs/ansible-clamav"
+- src: "https://github.com/fulib/fsulib.archivematica.clamav"
   version: "master"
   name: "artefactual.clamav"
+
+- src: "https://github.com/fsulib/fsulib.archivematica.nfs-client"
+  version: "master"
+  name: "fsulib.archivematica.nfs-client"

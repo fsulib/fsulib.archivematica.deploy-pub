@@ -1,6 +1,10 @@
 ---
 - hosts: "am-local"
 
+  vars:
+    archivematica_src_ssl_fullchain: "/etc/certstore/certs/am_lib_fsu_edu_trusted.cer"
+    archivematica_src_ssl_privkey: "/etc/certstore/private/am_lib_fsu_edu_private.key"
+
   pre_tasks:
 
     - include_vars: "vars-singlenode-1.11.yml"
@@ -9,13 +13,16 @@
 
     - name: "Install packages for development convenience"
       apt:
-        pkg: "{{ item }}"
+        pkg: ["fish"]
         state: "latest"
-      with_items:
-        - "fish"
       become: "yes"
 
   roles:
+
+    - role: "fsulib.archivematica.nfs-client"
+      become: "yes"
+      tags:
+        - "nfsclient"
 
     - role: "artefactual.elasticsearch"
       become: "yes"
@@ -23,10 +30,10 @@
         - "elasticsearch"
       when: "archivematica_src_search_enabled|bool"
 
-    - role: "artefactual.percona"
+    - role: "fsulib.archivematica.external-db"
       become: "yes"
       tags:
-        - "percona"
+        - "fsulib-extdb"
 
     - role: "artefactual.nginx"
       become: "yes"

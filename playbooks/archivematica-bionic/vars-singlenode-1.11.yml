@@ -2,10 +2,11 @@
 
 # archivematica-src role
 
-archivematica_src_install_devtools: "yes"
+archivematica_src_install_devtools: "no"
 archivematica_src_am_version: "stable/1.11.x"
 archivematica_src_ss_version: "stable/0.16.x"
 archivematica_src_ss_gunicorn: "true"
+archivematica_src_configure_ss_url: "https://am-store.lib.fsu.edu"
 archivematica_src_am_dashboard_gunicorn: "true"
 archivematica_src_am_multi_venvs: "true"
 
@@ -29,28 +30,95 @@ elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 elasticsearch_max_locked_memory: "unlimited"
 elasticsearch_network_host: "127.0.0.1"
 
-# percona role
+archivematica_src_am_db_host: "DBHOST"
+archivematica_src_am_db_name: "Test_Arch_MCP"
+archivematica_src_am_db_user: "DASHDBUSER"
+archivematica_src_am_db_password: "DASHDBPASS"
+archivematica_src_ss_db_name: "Test_Arch_SS"
+archivematica_src_ss_db_user: "SSDBUSER"
+archivematica_src_ss_db_password: "SSDBPASS"
 
+# nfsclient role
+
+nfs_client_imports:
+  - backup: "yes"
+    opts: "NFSOPTSSTRING"
+    path: "NFSMOUNTPOINT"
+    src: "NFSEXPORT"
+
+# fsulib.archivematica.external-db role
+
+mysql_root_user: "DBROOTUSER"
+mysql_root_password: "DBROOTPASS"
 mysql_databases:
   - name: "{{ archivematica_src_am_db_name }}"
     collation: "utf8_general_ci"
     encoding: "utf8"
+    login_host: "{{ archivematica_src_am_db_host }}"
+  - name: "{{ archivematica_src_ss_db_name }}"
+    collation: "utf8_general_ci"
+    encoding: "utf8"
+    login_host: "{{ archivematica_src_am_db_host }}"
 
 mysql_users:
   - name: "{{ archivematica_src_am_db_user }}"
     pass: "{{ archivematica_src_am_db_password }}"
     priv: "{{ archivematica_src_am_db_name }}.*:ALL,GRANT"
-    host: "{{ archivematica_src_am_db_host }}"
-
-mysql_root_password: "MYSQLROOTPASSWORD"
+    login_host: "{{ archivematica_src_am_db_host }}"
+    host: "%"
+  - name: "{{ archivematica_src_ss_db_user }}"
+    pass: "{{ archivematica_src_ss_db_password }}"
+    priv: "{{ archivematica_src_ss_db_name }}.*:ALL,GRANT"
+    login_host: "{{ archivematica_src_am_db_host }}"
+    host: "%"
 
 #AM configure vars
 
 archivematica_src_configure_dashboard: "yes"
 archivematica_src_configure_ss: "yes"
-archivematica_src_configure_ss_user: "admin"
-archivematica_src_configure_ss_password: "archivematica"
-archivematica_src_configure_ss_email: "admin@example.com"
-archivematica_src_configure_am_user: "admin"
-archivematica_src_configure_am_password: "archivematica"
-archivematica_src_configure_am_email: "admin@example.com"
+archivematica_src_configure_ss_user: "SSUSER"
+archivematica_src_configure_ss_password: "SSPASS"
+archivematica_src_configure_ss_email: "ADMINEMAIL"
+archivematica_src_configure_am_user: "DASHUSER"
+archivematica_src_configure_am_password: "DASHPASS"
+archivematica_src_configure_am_email: "ADMINEMAIL"
+archivematica_src_configure_am_org_name: "ORG_NAME"
+archivematica_src_configure_am_org_id: "ORG_ID"
+
+#Nginx
+
+archivematica_src_ssl: "true"
+
+################################################################################
+# Environment Files
+################################################################################
+
+archivematica_src_am_mcpserver_environment:
+  ARCHIVEMATICA_MCPSERVER_MCPSERVER_DJANGO_SECRET_KEY: "MCPSDSK"
+
+archivematica_src_am_mcpclient_environment:
+  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_DJANGO_SECRET_KEY: "MCPCDSK"
+
+archivematica_src_am_dashboard_environment:
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_TIME_ZONE: "America/New_York"
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_ALLOWED_HOSTS: ".fsu.edu"
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_SECRET_KEY: "AMDDSK"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST: "EMAILHOST"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_USER: "EMAILUSER"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_PASSWORD: "EMAILUSERPASS"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_PORT: "587"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_USE_TLS: "True"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_DEFAULT_FROM_EMAIL: "lib-specialcollections@fsu.edu"
+  # This breaks the automated deployment ffs
+  # ARCHIVEMATICA_DASHBOARD_EMAIL_SERVER_EMAIL: "lib-techsupport@fsu.edu"
+
+archivematica_src_ss_environment:
+  DJANGO_ALLOWED_HOSTS: ".fsu.edu"
+  SECRET_KEY: "AMSSDSK"
+  SS_DB_URL: "mysql://{{ archivematica_src_ss_db_user }}:{{ archivematica_src_ss_db_password }}@{{ archivematica_src_am_db_host }}:3306/{{ archivematica_src_ss_db_name }}"
+  SS_DB_NAME: "{{ archivematica_src_ss_db_name }}"
+  SS_DB_USER: "{{ archivematica_src_ss_db_user }}"
+  SS_DB_PASSWORD: "{{ archivematica_src_ss_db_password }}"
+  SS_DB_HOST: "{{ archivematica_src_am_db_host }}"
+
+
