@@ -20,7 +20,7 @@
   version: "stable/1.11.x"
   name: "artefactual.archivematica-src"
 
-- src: "https://github.com/fulib/fsulib.archivematica.clamav"
+- src: "https://github.com/fsulib/fsulib.archivematica.clamav"
   version: "master"
   name: "artefactual.clamav"
 
