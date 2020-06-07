@@ -46,6 +46,14 @@ nfs_client_imports:
     path: "NFSMOUNTPOINT"
     src: "NFSEXPORT"
 
+# Shared directory for processing, etc
+
+archivematica_src_shareddir: "/mounts/efs/am/sharedDirectory"
+
+# Reset AM Elasticsearch indices, shared directory, MCP database (overrides previous settings) 
+
+archivematica_src_reset_am_all: "false"         
+
 # fsulib.archivematica.external-db role
 
 mysql_root_user: "DBROOTUSER"
