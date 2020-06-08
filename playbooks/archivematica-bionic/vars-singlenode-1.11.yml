@@ -48,7 +48,7 @@ nfs_client_imports:
 
 # Shared directory for processing, etc
 
-archivematica_src_shareddir: "/mounts/efs/am/sharedDirectory"
+archivematica_src_shareddir: "/mounts/efs/shared"
 
 # Reset AM Elasticsearch indices, shared directory, MCP database (overrides previous settings) 
 
