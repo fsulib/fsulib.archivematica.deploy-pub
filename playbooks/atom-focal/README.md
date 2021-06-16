@@ -4,8 +4,8 @@ The provided playbook installs AtoM on a local Vagrant virtual machine.
 
 ## Requirements
 
-- Vagrant 1.8.1 or newer
-- Ansible 2.0.1 or newer
+- Vagrant 2.1.4 or newer
+- Ansible 2.6.1 or newer
 
 ## How to use
 
@@ -40,4 +40,4 @@ To (re-)provision the VM, using Ansible commands directly:
 
 To (re-)provision the VM, passing your own arguments to `Ansible`:
 
-    $ ANSIBLE_ARGS="--tags=elasticsearch,percona,percona-client,memcached,gearman,nginx" vagrant provision
+    $ ANSIBLE_ARGS="--tags=elasticsearch,percona,memcached,gearman,nginx" vagrant provision

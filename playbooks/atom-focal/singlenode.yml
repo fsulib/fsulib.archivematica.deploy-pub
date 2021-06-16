@@ -3,13 +3,13 @@
 
   pre_tasks:
 
-    - include_vars: "vars-singlenode.yml"
+    - include_vars: "vars-singlenode-qa.yml"
       tags:
         - "always"
 
   roles:
 
-    - role: "elastic.elasticsearch"
+    - role: "artefactual.elasticsearch"
       become: "yes"
       tags:
         - "elasticsearch"

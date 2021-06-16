@@ -3,8 +3,8 @@
 # archivematica-src role
 
 archivematica_src_install_devtools: "no"
-archivematica_src_am_version: "stable/1.11.x"
-archivematica_src_ss_version: "stable/0.16.x"
+archivematica_src_am_version: "stable/1.12.x"
+archivematica_src_ss_version: "stable/0.17.x"
 archivematica_src_ss_gunicorn: "true"
 archivematica_src_configure_ss_url: "https://am-store.lib.fsu.edu"
 archivematica_src_am_dashboard_gunicorn: "true"
@@ -12,8 +12,7 @@ archivematica_src_am_dashboard_gunicorn: "true"
 # elasticsearch role
 
 elasticsearch_version: "6.5.4"
-elasticsearch_apt_java_package: "openjdk-8-jre-headless"
-elasticsearch_java_home: "/usr/lib/jvm/java-1.8.0-openjdk-amd64"
+elasticsearch_java_home: "/usr/lib/jvm/jre-1.8.0"
 elasticsearch_heap_size: "1g"
 elasticsearch_max_open_files: "65535"
 elasticsearch_timezone: "UTC"
@@ -22,8 +21,8 @@ elasticsearch_index_mapper_dynamic: "true"
 elasticsearch_memory_bootstrap_mlockall: "true"
 elasticsearch_install_java: "true"
 elasticsearch_thread_pools:
-  - "thread_pool.write.size: 2"
-  - "thread_pool.write.queue_size: 1000"
+  - "thread_pool.bulk.size: 2"
+  - "thread_pool.bulk.queue_size: 1000"
 elasticsearch_network_http_max_content_lengtht: 1024mb
 elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 elasticsearch_max_locked_memory: "unlimited"

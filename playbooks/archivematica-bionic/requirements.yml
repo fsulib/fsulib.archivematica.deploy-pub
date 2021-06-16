@@ -17,7 +17,7 @@
   name: "artefactual.nginx"
 
 - src: "https://github.com/fsulib/fsulib.archivematica.src"
-  version: "stable/1.11.x"
+  version: "stable/1.12.x"
   name: "artefactual.archivematica-src"
 
 - src: "https://github.com/fsulib/fsulib.archivematica.clamav"

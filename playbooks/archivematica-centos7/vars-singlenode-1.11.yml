@@ -7,7 +7,6 @@ archivematica_src_am_version: "stable/1.11.x"
 archivematica_src_ss_version: "stable/0.16.x"
 archivematica_src_ss_gunicorn: "true"
 archivematica_src_am_dashboard_gunicorn: "true"
-archivematica_src_am_multi_venvs: "yes"
 
 # reset setup vars, commented out here, uncomment if needed
 #archivematica_src_reset_am_all: "true"
@@ -44,13 +43,17 @@ mysql_users:
    host: "{{ archivematica_src_am_db_host }}"
 mysql_root_password: "ChangeMe!"
 
-# AM configure vars
+#AM configure vars
 
 archivematica_src_configure_dashboard: "yes"
 archivematica_src_configure_ss: "yes"
 archivematica_src_configure_ss_user: "admin"
 archivematica_src_configure_ss_password: "archivematica"
+archivematica_src_configure_ss_api_key: "this_is_the_ss_api_key"
+archivematica_src_configure_ss_url: "http://192.168.168.197:8000"
 archivematica_src_configure_ss_email: "admin@example.com"
 archivematica_src_configure_am_user: "admin"
 archivematica_src_configure_am_password: "archivematica"
 archivematica_src_configure_am_email: "admin@example.com"
+archivematica_src_configure_am_api_key: "this_is_the_am_api_key"
+archivematica_src_configure_am_site_url: "http://192.168.168.197"

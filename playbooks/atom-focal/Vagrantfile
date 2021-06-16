@@ -6,12 +6,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = ENV.fetch("VAGRANT_BOX", "ubuntu/xenial64")
+  config.vm.box = ENV.fetch("VAGRANT_BOX", "ubuntu/focal64")
 
   {
     "atom-local" => {
-      "ip" => "192.168.168.194",
-      "memory" => "2048",
+      "ip" => "192.168.168.200",
+      "memory" => "4096",
       "cpus" => "2",
     },
   }.each do |short_name, properties|
@@ -29,16 +29,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   end
 
-  config.vm.provision "shell", inline: <<-SHELL
-    # ubuntu/xenial64 doesn't include Python
-    if [ ! -f /usr/bin/python ]; then
-      sudo apt-get update && sudo apt-get --yes install python-minimal
-    fi
-
-    # ubuntu/xenial64 missing host entry in /etc/hosts?
-    sed -i "s/127\.0\.0\.1 localhost/127\.0\.0\.1 localhost ubuntu-xenial/g" /etc/hosts
-  SHELL
-
   config.vm.synced_folder "src/atom", "/usr/share/nginx/atom", create: true
 
   # Ansible provisioning
@@ -49,9 +39,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "atom_user" => "vagrant",
       "atom_group" => "vagrant",
       "atom_environment_type" => "development",
-      "atom_flush_data" => "yes",
+      "atom_auto_init" => "yes",
       "es_config" => {
-        "network.host" => "0.0.0.0"
+        "network.host" => "127.0.0.1"
       }
     }
     ansible.verbose = 'v'
