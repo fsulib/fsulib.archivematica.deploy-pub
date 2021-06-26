@@ -40,8 +40,8 @@ archivematica_src_ss_db_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_pa
 
 nfs_client_imports:
   - backup: "yes"
-    apts: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_opts', region='__AWSREGION__') }}"
-    aath: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_mountpoint', region='__AWSREGION__') }}"
+    opts: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_opts', region='__AWSREGION__') }}"
+    path: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_mountpoint', region='__AWSREGION__') }}"
     src: "/"
 
 # Shared directory for processing, etc
