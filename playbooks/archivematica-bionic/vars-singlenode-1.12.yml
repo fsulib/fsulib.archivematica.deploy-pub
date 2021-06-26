@@ -42,7 +42,7 @@ nfs_client_imports:
   - backup: "yes"
     opts: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_opts', region='__AWSREGION__') }}"
     path: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_mountpoint', region='__AWSREGION__') }}"
-    src: "/"
+    src: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_dns_name', region='__AWSREGION__') }}:/"
 
 # Shared directory for processing, etc
 
