@@ -54,8 +54,8 @@ archivematica_src_reset_am_all: "false"
 
 # fsulib.archivematica.external-db role
 
-aysql_root_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/db_root_user', region='__AWSREGION__') }}"
-aysql_root_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/db_root_pass', region='__AWSREGION__') }}"
+fsulib_ext_db_root_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/db_root_user', region='__AWSREGION__') }}"
+fsulib_ext_db_root_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/db_root_pass', region='__AWSREGION__') }}"
 mysql_databases:
   - name: "{{ archivematica_src_am_db_name }}"
     collation: "utf8_general_ci"
