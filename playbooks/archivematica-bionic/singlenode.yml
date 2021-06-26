@@ -1,5 +1,6 @@
 ---
 - hosts: "localhost"
+  connection: "local"
 
   vars:
     archivematica_src_ssl_fullchain: "/etc/certstore/certs/am_lib_fsu_edu_trusted.cer"
