@@ -101,27 +101,27 @@ archivematica_src_ssl: "true"
 ################################################################################
 
 archivematica_src_am_mcpserver_environment:
-  aRCHIVEMATICA_MCPSERVER_MCPSERVER_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpserver_key', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_MCPSERVER_MCPSERVER_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpserver_key', region='__AWSREGION__') }}"
 
 archivematica_src_am_mcpclient_environment:
-  aRCHIVEMATICA_MCPCLIENT_MCPCLIENT_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpclient_key', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpclient_key', region='__AWSREGION__') }}"
 
 archivematica_src_am_dashboard_environment:
   ARCHIVEMATICA_DASHBOARD_DASHBOARD_TIME_ZONE: "America/New_York"
   ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_ALLOWED_HOSTS: ".fsu.edu"
-  aRCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_dash_key', region='__AWSREGION__') }}"
-  aRCHIVEMATICA_DASHBOARD_EMAIL_HOST: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_endpoint', region='__AWSREGION__') }}"
-  aRCHIVEMATICA_DASHBOARD_EMAIL_HOST_USER: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_user', region='__AWSREGION__') }}"
-  aRCHIVEMATICA_DASHBOARD_EMAIL_HOST_PASSWORD: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_pass', region='__AWSREGION__') }}"
-  aRCHIVEMATICA_DASHBOARD_EMAIL_PORT: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_port', region='__AWSREGION__') }}"
-  aRCHIVEMATICA_DASHBOARD_EMAIL_USE_TLS: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_use_tls', region='__AWSREGION__') }}"
-  aRCHIVEMATICA_DASHBOARD_EMAIL_DEFAULT_FROM_EMAIL: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_from_address', region='__AWSREGION__') }}" 
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_dash_key', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_endpoint', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_USER: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_user', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_PASSWORD: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_pass', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_PORT: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_port', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_USE_TLS: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_use_tls', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_DEFAULT_FROM_EMAIL: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_from_address', region='__AWSREGION__') }}" 
   # This breaks the automated deployment ffs
   # ARCHIVEMATICA_DASHBOARD_EMAIL_SERVER_EMAIL: "lib-techsupport@fsu.edu"
 
 archivematica_src_ss_environment:
   DJANGO_ALLOWED_HOSTS: ".fsu.edu"
-  aECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_ss_key', region='__AWSREGION__') }}"
+  SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_ss_key', region='__AWSREGION__') }}"
   SS_DB_URL: "mysql://{{ archivematica_src_ss_db_user }}:{{ archivematica_src_ss_db_password }}@{{ archivematica_src_am_db_host }}:3306/{{ archivematica_src_ss_db_name }}"
   SS_DB_NAME: "{{ archivematica_src_ss_db_name }}"
   SS_DB_USER: "{{ archivematica_src_ss_db_user }}"
