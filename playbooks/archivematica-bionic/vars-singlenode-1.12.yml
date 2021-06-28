@@ -11,6 +11,7 @@ archivematica_src_ss_gunicorn: "true"
 archivematica_src_configure_ss_url: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_dns_name', region='__AWSREGION__') }}"
 archivematica_src_configure_am_site_url: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_dns_name', region='__AWSREGION__') }}"
 archivematica_src_am_dashboard_gunicorn: "true"
+archivematica_src_shareddir: "{{ lookup('aws_ssm', '/am/__LIBENV__/am_shared_dir', region='__AWSREGION__') }}"
 
 # Databases
 
