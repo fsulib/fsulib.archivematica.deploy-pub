@@ -1,6 +1,8 @@
 ---
 
-# archivematica-src role
+################################################################################
+# Archivematica SRC Overrides/Vars
+################################################################################
 
 archivematica_src_install_devtools: "no"
 archivematica_src_am_version: "stable/1.12.x"
@@ -9,6 +11,71 @@ archivematica_src_ss_gunicorn: "true"
 archivematica_src_configure_ss_url: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_dns_name', region='__AWSREGION__') }}"
 archivematica_src_configure_am_site_url: "{{ lookup('aws_ssm', '/am/__LIBENV__/am_dns_name', region='__AWSREGION__') }}"
 archivematica_src_am_dashboard_gunicorn: "true"
+
+# Databases
+
+archivematica_src_am_db_host: "{{ lookup('aws_ssm', '/am/__LIBENV__/db_endpoint', region='__AWSREGION__') }}"
+archivematica_src_am_db_name: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_db_name', region='__AWSREGION__') }}"
+archivematica_src_am_db_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_db_user', region='__AWSREGION__') }}"
+archivematica_src_am_db_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_db_pass', region='__AWSREGION__') }}"
+archivematica_src_ss_db_name: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_name', region='__AWSREGION__') }}"
+archivematica_src_ss_db_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_user', region='__AWSREGION__') }}"
+archivematica_src_ss_db_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_pass', region='__AWSREGION__') }}"
+
+archivematica_src_am_create_db: "true"           
+archivematica_src_am_create_dbuser: "true"       
+archivematica_src_am_wait_local_mysql: "true"    
+
+archivematica_src_reset_mcpdb: "false"           
+archivematica_src_reset_shareddir: "false"       
+archivematica_src_reset_es: "false"              
+archivematica_src_reset_am_all: "false"          
+archivematica_src_reset_ss_db: "false"           
+
+archivematica_src_configure_dashboard: "yes"
+archivematica_src_configure_ss: "yes"
+archivematica_src_configure_ss_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_user', region='__AWSREGION__') }}"
+archivematica_src_configure_ss_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_pass', region='__AWSREGION__') }}"
+archivematica_src_configure_ss_email: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_email', region='__AWSREGION__') }}"
+archivematica_src_configure_am_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_user', region='__AWSREGION__') }}"
+archivematica_src_configure_am_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_pass', region='__AWSREGION__') }}"
+archivematica_src_configure_am_email: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_email', region='__AWSREGION__') }}"
+archivematica_src_configure_am_org_name: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_org_name', region='__AWSREGION__') }}"
+archivematica_src_configure_am_org_id: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_org_id', region='__AWSREGION__') }}"
+
+archivematica_src_shareddir: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_mountpoint', region='__AWSREGION__') }}" 
+
+archivematica_src_ssl: "true"
+
+# Environment Files
+
+archivematica_src_am_mcpserver_environment:
+  ARCHIVEMATICA_MCPSERVER_MCPSERVER_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpserver_key', region='__AWSREGION__') }}"
+
+archivematica_src_am_mcpclient_environment:
+  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpclient_key', region='__AWSREGION__') }}"
+
+archivematica_src_am_dashboard_environment:
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_TIME_ZONE: "America/New_York"
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_ALLOWED_HOSTS: ".fsu.edu"
+  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_dash_key', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_endpoint', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_USER: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_user', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_PASSWORD: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_pass', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_PORT: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_port', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_USE_TLS: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_use_tls', region='__AWSREGION__') }}"
+  ARCHIVEMATICA_DASHBOARD_EMAIL_DEFAULT_FROM_EMAIL: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_from_address', region='__AWSREGION__') }}" 
+  # This breaks the automated deployment ffs
+  # ARCHIVEMATICA_DASHBOARD_EMAIL_SERVER_EMAIL: "lib-techsupport@fsu.edu"
+
+archivematica_src_ss_environment:
+  DJANGO_ALLOWED_HOSTS: ".fsu.edu"
+  SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_ss_key', region='__AWSREGION__') }}"
+  SS_DB_URL: "mysql://{{ archivematica_src_ss_db_user }}:{{ archivematica_src_ss_db_password }}@{{ archivematica_src_am_db_host }}:3306/{{ archivematica_src_ss_db_name }}"
+  SS_DB_NAME: "{{ archivematica_src_ss_db_name }}"
+  SS_DB_USER: "{{ archivematica_src_ss_db_user }}"
+  SS_DB_PASSWORD: "{{ archivematica_src_ss_db_password }}"
+  SS_DB_HOST: "{{ archivematica_src_am_db_host }}"
 
 # elasticsearch role
 
@@ -29,14 +96,6 @@ elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 elasticsearch_max_locked_memory: "unlimited"
 elasticsearch_network_host: "127.0.0.1"
 
-archivematica_src_am_db_host: "{{ lookup('aws_ssm', '/am/__LIBENV__/db_endpoint', region='__AWSREGION__') }}"
-archivematica_src_am_db_name: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_db_name', region='__AWSREGION__') }}"
-archivematica_src_am_db_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_db_user', region='__AWSREGION__') }}"
-archivematica_src_am_db_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_db_pass', region='__AWSREGION__') }}"
-archivematica_src_ss_db_name: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_name', region='__AWSREGION__') }}"
-archivematica_src_ss_db_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_user', region='__AWSREGION__') }}"
-archivematica_src_ss_db_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_db_pass', region='__AWSREGION__') }}"
-
 # nfsclient role
 
 nfs_client_imports:
@@ -47,7 +106,6 @@ nfs_client_imports:
 
 # Shared directory for processing, etc
 
-archivematica_src_shareddir: "{{ lookup('aws_ssm', '/am/__LIBENV__/efs_mountpoint', region='__AWSREGION__') }}" 
 
 # Reset AM Elasticsearch indices, shared directory, MCP database (overrides previous settings) 
 
@@ -79,52 +137,4 @@ mysql_users:
     login_host: "{{ archivematica_src_am_db_host }}"
     host: "%"
 
-#AM configure vars
-
-archivematica_src_configure_dashboard: "yes"
-archivematica_src_configure_ss: "yes"
-archivematica_src_configure_ss_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_user', region='__AWSREGION__') }}"
-archivematica_src_configure_ss_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_pass', region='__AWSREGION__') }}"
-archivematica_src_configure_ss_email: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_email', region='__AWSREGION__') }}"
-archivematica_src_configure_am_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_user', region='__AWSREGION__') }}"
-archivematica_src_configure_am_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_pass', region='__AWSREGION__') }}"
-archivematica_src_configure_am_email: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_email', region='__AWSREGION__') }}"
-archivematica_src_configure_am_org_name: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_org_name', region='__AWSREGION__') }}"
-archivematica_src_configure_am_org_id: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_org_id', region='__AWSREGION__') }}"
-
-#Nginx
-
-archivematica_src_ssl: "true"
-
-################################################################################
-# Environment Files
-################################################################################
-
-archivematica_src_am_mcpserver_environment:
-  ARCHIVEMATICA_MCPSERVER_MCPSERVER_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpserver_key', region='__AWSREGION__') }}"
-
-archivematica_src_am_mcpclient_environment:
-  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpclient_key', region='__AWSREGION__') }}"
-
-archivematica_src_am_dashboard_environment:
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_TIME_ZONE: "America/New_York"
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_ALLOWED_HOSTS: ".fsu.edu"
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_dash_key', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_endpoint', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_USER: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_user', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_EMAIL_HOST_PASSWORD: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_pass', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_EMAIL_PORT: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_port', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_EMAIL_USE_TLS: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_use_tls', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_EMAIL_DEFAULT_FROM_EMAIL: "{{ lookup('aws_ssm', '/am/__LIBENV__/smtp_from_address', region='__AWSREGION__') }}" 
-  # This breaks the automated deployment ffs
-  # ARCHIVEMATICA_DASHBOARD_EMAIL_SERVER_EMAIL: "lib-techsupport@fsu.edu"
-
-archivematica_src_ss_environment:
-  DJANGO_ALLOWED_HOSTS: ".fsu.edu"
-  SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_ss_key', region='__AWSREGION__') }}"
-  SS_DB_URL: "mysql://{{ archivematica_src_ss_db_user }}:{{ archivematica_src_ss_db_password }}@{{ archivematica_src_am_db_host }}:3306/{{ archivematica_src_ss_db_name }}"
-  SS_DB_NAME: "{{ archivematica_src_ss_db_name }}"
-  SS_DB_USER: "{{ archivematica_src_ss_db_user }}"
-  SS_DB_PASSWORD: "{{ archivematica_src_ss_db_password }}"
-  SS_DB_HOST: "{{ archivematica_src_am_db_host }}"
 
