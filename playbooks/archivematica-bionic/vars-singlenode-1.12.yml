@@ -34,6 +34,7 @@ archivematica_src_reset_ss_db: "false"
 
 archivematica_src_configure_dashboard: "yes"
 archivematica_src_configure_ss: "yes"
+archivematica_src_configure_ss_api_key: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_api_key', region='__AWSREGION__') }}"
 archivematica_src_configure_ss_user: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_user', region='__AWSREGION__') }}"
 archivematica_src_configure_ss_password: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_pass', region='__AWSREGION__') }}"
 archivematica_src_configure_ss_email: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_email', region='__AWSREGION__') }}"
