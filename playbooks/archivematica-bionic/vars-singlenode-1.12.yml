@@ -11,7 +11,6 @@ archivematica_src_ss_gunicorn: "true"
 archivematica_src_configure_ss_url: "{{ lookup('aws_ssm', '/am/__LIBENV__/ss_dns_name', region='__AWSREGION__') }}"
 archivematica_src_configure_am_site_url: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_dns_name', region='__AWSREGION__') }}"
 archivematica_src_am_dashboard_gunicorn: "true"
-archivematica_src_shareddir: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_shared_dir', region='__AWSREGION__') }}"
 
 # Databases
 
@@ -52,24 +51,11 @@ archivematica_src_ssl: "true"
 
 archivematica_src_am_mcpserver_environment:
   ARCHIVEMATICA_MCPSERVER_MCPSERVER_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpserver_key', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPSERVER_MCPSERVER_SHARED_DIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_shared_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPSERVER_MCPSERVER_SHAREDDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_shared_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPSERVER_MCPSERVER_WATCHDIRECTORYPATH: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_watched_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPSERVER_MCPSERVER_PROCESSINGDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_currently_processing_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPSERVER_MCPSERVER_REJECTEDDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_rejected_dir', region='__AWSREGION__') }}"
 
 archivematica_src_am_mcpclient_environment:
   ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_mcpclient_key', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_SHAREDDIRECTORYMOUNTED: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_shared_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_PROCESSINGDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_currently_processing_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_REJECTEDDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_rejected_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_MCPCLIENT_MCPCLIENT_WATCHDIRECTORYPATH: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_watched_dir', region='__AWSREGION__') }}"
 
 archivematica_src_am_dashboard_environment:
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_SHARED_DIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_shared_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_SHAREDDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_shared_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_WATCH_DIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_watched_dir', region='__AWSREGION__') }}"
-  ARCHIVEMATICA_DASHBOARD_DASHBOARD_WATCHDIRECTORY: "{{ lookup('aws_ssm', '/am/__LIBENV__/dash_watched_dir', region='__AWSREGION__') }}"
   ARCHIVEMATICA_DASHBOARD_DASHBOARD_TIME_ZONE: "America/New_York"
   ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_ALLOWED_HOSTS: ".fsu.edu"
   ARCHIVEMATICA_DASHBOARD_DASHBOARD_DJANGO_SECRET_KEY: "{{ lookup('aws_ssm', '/am/__LIBENV__/django_dash_key', region='__AWSREGION__') }}"
