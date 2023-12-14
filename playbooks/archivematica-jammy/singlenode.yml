@@ -1,0 +1,46 @@
+---
+- hosts: "localhost"
+  connection: "local"
+
+  vars:
+    archivematica_src_ssl_fullchain: "/etc/certstore/certs/am_lib_fsu_edu_trusted.cer"
+    archivematica_src_ssl_privkey: "/etc/certstore/private/am_lib_fsu_edu_private.key"
+
+  pre_tasks:
+
+    - include_vars: "vars-fsulib.yml"
+      tags:
+        - "always"
+
+  roles:
+
+    - role: "artefactual.elasticsearch"
+      become: "yes"
+      tags:
+        - "elasticsearch"
+      when: "archivematica_src_search_enabled|bool"
+
+    - role: "fsulib.archivematica.external-db"
+      become: "yes"
+      tags:
+        - "fsulib-extdb"
+
+    - role: "artefactual.nginx"
+      become: "yes"
+      tags:
+        - "nginx"
+
+    - role: "artefactual.gearman"
+      become: "yes"
+      tags:
+        - "gearman"
+
+    - role: "artefactual.clamav"
+      become: "yes"
+      tags:
+        - "clamav"
+
+    - role: "artefactual.archivematica-src"
+      become: "yes"
+      tags:
+        - "archivematica-src"

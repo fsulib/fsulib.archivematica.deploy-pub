@@ -1,0 +1,25 @@
+---
+
+- src: "https://github.com/fsulib/fsulib.archivematica.elasticsearch"
+  version: "master"
+  name: "artefactual.elasticsearch"
+
+- src: "https://github.com/fsulib/fsulib.archivematica.external-db"
+  version: "master"
+  name: "fsulib.archivematica.external-db"
+
+- src: "https://github.com/fsulib/fsulib.archivematica.gearman"
+  version: "master"
+  name: "artefactual.gearman"
+
+- src: "https://github.com/fsulib/fsulib.archivematica.nginx"
+  version: "master"
+  name: "artefactual.nginx"
+
+- src: "https://github.com/fsulib/fsulib.archivematica.src"
+  version: "am-1.15"
+  name: "artefactual.archivematica-src"
+
+- src: "https://github.com/fsulib/fsulib.archivematica.clamav"
+  version: "master"
+  name: "artefactual.clamav"
