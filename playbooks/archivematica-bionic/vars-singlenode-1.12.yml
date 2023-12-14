@@ -4,11 +4,11 @@
 # Archivematica SRC Overrides/Vars
 ################################################################################
 
-archivematica_src_install_devtools: "no"
-archivematica_src_am_version: "stable/1.12.x"
-archivematica_src_ss_version: "stable/0.17.x"
+archivematica_src_am_version: "stable/1.15.x"
+archivematica_src_ss_version: "stable/0.21.x"
 archivematica_src_ss_gunicorn: "true"
 archivematica_src_am_dashboard_gunicorn: "true"
+install_rpm_repositories: "false"
 
 # Databases
 
